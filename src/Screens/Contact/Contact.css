@@ -1,0 +1,149 @@
+:root {
+    --primary-bg-color: #f0f2f5;
+    --secondary-bg-color: #ffffff;
+    --text-color: #111b21;
+    --accent-color: #00a884;
+    --border-color: #e0e0e0;
+}
+
+.contact-container {
+    max-width: 2000px;
+    margin: 0 auto;
+    height: 100vh;
+    background-color: var(--primary-bg-color);
+}
+
+.whatsapp-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.top-bar .icons i {
+    margin-left: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+.contacts-section {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.contact-form {
+    width: 40%;
+    padding: 20px;
+    background-color: var(--secondary-bg-color);
+    border-right: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.image-preview {
+    margin-bottom: 15px;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contacts-list {
+    width: 60%;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contact-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.bottom-navigation {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: var(--secondary-bg-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.bottom-navigation i {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .contacts-section {
+        flex-direction: column;
+    }
+
+    .contact-form, .contacts-list {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+    .contact-form {
+        width: 45%;
+    }
+
+    .contacts-list {
+        width: 55%;
+    }
+}
+
+@media screen and (min-width: 1201px) and (max-width: 2000px) {
+    .contact-form {
+        width: 40%;
+    }
+
+    .contacts-list {
+        width: 60%;
+    }
+}
