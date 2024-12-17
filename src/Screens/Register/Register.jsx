@@ -1,63 +1,49 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css';
-import ENVIRONMENT from '../../environment.js';
+import ENVIROMENT from '../../enviroment.js';
 import useForm from '../../Hooks/useForm.jsx';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
-import extractFormData from '../../utils/extractFormData.js';
-import { useState } from 'react';
+import { extractFormData } from '../../utils/extractFormData.js';
 
-const form_fields = {
-    'name': '',
-    'email': '',
-    'password': ''
-};
 
 const Register = () => {
-    const navigate = useNavigate(); 
-    const [errorMessage, setErrorMessage] = useState('');
-    const { form_values_state, handleChangeInputValue } = useForm(form_fields);
 
-    const handleSubmitRegisterForm = async (e) => {
+    const form_fields = {
+        'name': '',
+        'email': '',
+        'password': ''
+    }
+    const navigate = useNavigate()
+    const { form_values_state, handleChangeInputValue } = useForm(form_fields)
+    const handleSubmitRegisterForm = async (event) => {
+        event.preventDefault()
+        const form_HTML = event.target
+        const form_values = new FormData(form_HTML)
+        const form_values_object = extractFormData(form_fields, form_values)
 
-        setErrorMessage('');
-
-        try {
-            e.preventDefault();
-            const form_HTML = e.target;
-            const form_values = new FormData(form_HTML);
-            const form_values_state = extractFormData(form_fields, form_values);
-
-            const body = await POST(
-                `${ENVIRONMENT.URL_BACK}/api/auth/register`,
-                {
-                    headers: getUnnauthenticatedHeaders(),
-                    body: JSON.stringify(form_values_state)
+        const body = await POST(
+            `${ENVIROMENT.URL_BACK}/api/auth/register`,
+            {
+                headers: getUnnauthenticatedHeaders(),
+                body: JSON.stringify(form_values_object) 
+            }
+        )
+            .then(
+                (response_HTTP) => { 
+                    console.log({ response_HTTP })
+                return response_HTTP.json()
                 }
-            );
-
-            if (body && body.ok) {
-                const access_token = body.payload.token;
-                sessionStorage.setItem('access_token', access_token);
-                sessionStorage.setItem('user_info', JSON.stringify(body.payload.user));
-                navigate('/');
-            }
-            if(error) {
-                console.error(errorMessage);
-            }
-
-        } catch (error) {
-            console.error('Registration error:', error);
-            
-            if (error.response) {
-                const errorMessage = error.response.data.message || 
-                                    'Registration failed. Please try again.';
-                setErrorMessage(errorMessage);
-            } else if (error.request) {
-                setErrorMessage('No response from server. Please check your connection.');
-            } else {
-                setErrorMessage('An unexpected error occurred. Please try again.');
-            }
-        }
+            )
+            .then(
+                (body) =>{
+                    console.log({ body })
+                }
+            )
+            .catch(
+                (error) => { console.error(error) }
+            )
+        console.log(body)
+        navigate('/Contact')
     }
 
     return (
@@ -91,10 +77,10 @@ const Register = () => {
                 <div>
                     <label htmlFor="password">Write your password:</label>
                     <input
-                    type='password'
+                        type='password'
                         name="password"
                         id="password"
-                        placeholder="*"
+                        placeholder="Password!"
                         onChange={handleChangeInputValue}
                         value={form_values_state.password}
                         required

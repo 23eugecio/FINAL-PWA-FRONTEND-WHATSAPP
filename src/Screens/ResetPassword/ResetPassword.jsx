@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import extractFormData from '../../utils/extractFormData'
+import { extractFormData } from '../../utils/extractFormData'
 import { POST, getUnnauthenticatedHeaders } from '../../Fetching/http.fetching'
-import ENVIRONMENT from '../../environment'
+import ENVIROMENT from '../../enviroment'
 
 const ResetPassword = () => {
 const {reset_token} = useParams();
@@ -17,7 +17,7 @@ const Navigate = useNavigate();
             };
             const form_values_object = extractFormData(form_fields, form_values);
 
-            const response = await POST(`${ENVIRONMENT.URL_BACK}/api/auth/reset-password`, 
+            const response = await POST(`${ENVIROMENT.URL_BACK}/api/auth/reset-password`, 
                 {
                 headers: getUnnauthenticatedHeaders(),
                 body: JSON.stringify(form_values_object)

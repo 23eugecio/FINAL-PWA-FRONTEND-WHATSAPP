@@ -1,22 +1,16 @@
-
-
-
-export const POST = async (URL_BACK, params) => {
-	try{
-		const response = await fetch(URL_BACK, {
-			method: 'POST',
+export const POST = async (URL_BACK, params) => { 
+    try { 
+        const response = await fetch(URL_BACK, {
+            method: 'POST', 
 			...params
-		})
-		return response.json()
-	}
-	catch(error){
+        });
+        return response.json();
+    } 
+    catch(error){ 
 		console.log(error)
 		throw error
-		
-	}
-	
+    } 
 }
-
 
 
 export const GET = async (URL_BACK, params) => {
@@ -77,14 +71,14 @@ export const DELETE = async (URL_BACK, params) => {
 const getUnnauthenticatedHeaders = () => {
     const unnauthenticatedHeaders = new Headers()
     unnauthenticatedHeaders.set('Content-Type', 'application/json')
-    unnauthenticatedHeaders.set('x-api-key', '8e849ec1-2977-404c-88c0-c8d2246d498f')
+    unnauthenticatedHeaders.set('x-api-key', '2cec07f3-b63f-4694-a841-5b66a8d5ba53')
     return unnauthenticatedHeaders
 }
 
 const getAuthenticatedHeaders = () => {
     const authenticatedHeaders = new Headers()
     authenticatedHeaders.set('Content-Type', 'application/json')
-    authenticatedHeaders.set('x-api-key', '8e849ec1-2977-404c-88c0-c8d2246d498f')
+    authenticatedHeaders.set('x-api-key', '2cec07f3-b63f-4694-a841-5b66a8d5ba53')
     authenticatedHeaders.set('Authorization', 'Bearer ' + sessionStorage.getItem('access_token'))
     return authenticatedHeaders
 }

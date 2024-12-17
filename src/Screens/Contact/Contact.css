@@ -1,50 +1,50 @@
-:root {
-    --primary-bg-color: #f0f2f5;
-    --secondary-bg-color: #ffffff;
-    --text-color: #111b21;
-    --accent-color: #00a884;
-    --border-color: #e0e0e0;
-}
 
 .contact-container {
-    max-width: 2000px;
-    margin: 0 auto;
-    height: 100vh;
-    background-color: var(--primary-bg-color);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    min-height: 100vh;
 }
 
 .whatsapp-layout {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    background-color: var(--accent-color);
-    color: white;
+    padding: 10px 20px;
+    background-color: #075e54;
+    color: #fff;
 }
 
-.top-bar .icons i {
+.top-bar span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.icons i {
     margin-left: 15px;
-    color: white;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
-.contacts-section {
-    display: flex;
-    flex-grow: 1;
-    overflow: hidden;
-}
 
 .contact-form {
-    width: 40%;
     padding: 20px;
-    background-color: var(--secondary-bg-color);
-    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid #ccc;
+}
+
+.contact-form h2 {
+    margin-bottom: 15px;
 }
 
 .form-group {
@@ -54,46 +54,49 @@
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-.image-preview {
-    margin-bottom: 15px;
 }
 
 .image-preview img {
-    max-width: 200px;
-    max-height: 200px;
-    border-radius: 50%;
+    max-width: 100px;
+    margin-top: 10px;
 }
 
 .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--accent-color);
+    background-color: #25d366;
     color: white;
     border: none;
+    padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #1db954;
+}
+
+
+.contacts-section {
+    padding: 20px;
 }
 
 .contacts-list {
-    width: 60%;
-    padding: 20px;
-    overflow-y: auto;
+    margin-top: 20px;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
 }
 
 .contact-item img {
@@ -103,47 +106,64 @@
     margin-right: 15px;
 }
 
+.contact-details h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.contact-details p {
+    margin: 2px 0;
+    color: #555;
+}
+
+
 .bottom-navigation {
+    position: sticky;
+    bottom: 0;
+    background-color: #075e54;
     display: flex;
     justify-content: space-around;
-    padding: 15px;
-    background-color: var(--secondary-bg-color);
-    border-top: 1px solid var(--border-color);
+    padding: 10px 0;
+    color: #fff;
+    font-size: 1.5rem;
 }
 
 .bottom-navigation i {
-    font-size: 1.5rem;
-    color: var(--text-color);
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-/* Responsive Adjustments */
-@media screen and (max-width: 768px) {
-    .contacts-section {
+.bottom-navigation i:hover {
+    color: #25d366;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .top-bar {
         flex-direction: column;
+        align-items: flex-start;
     }
 
-    .contact-form, .contacts-list {
-        width: 100%;
-    }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1200px) {
-    .contact-form {
-        width: 45%;
+    .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .contacts-list {
-        width: 55%;
+    .bottom-navigation {
+        font-size: 1.2rem;
     }
 }
 
-@media screen and (min-width: 1201px) and (max-width: 2000px) {
-    .contact-form {
-        width: 40%;
+@media (max-width: 480px) {
+    .contact-form input {
+        font-size: 14px;
     }
 
-    .contacts-list {
-        width: 60%;
+    .submit-button {
+        font-size: 14px;
+    }
+
+    .bottom-navigation i {
+        font-size: 1.2rem;
     }
 }

@@ -1,0 +1,26 @@
+.message-create-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.message-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: green;
+    margin-bottom: 15px;
+}

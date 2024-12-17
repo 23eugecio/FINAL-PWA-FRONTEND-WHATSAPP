@@ -1,79 +1,86 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './ForgotPassword.css'
-import ENVIRONMENT from '../../environment'
-import { getUnnauthenticatedHeaders, POST } from '../../fetching/http.fetching'
+import { extractFormData } from '../../utils/extractFormData'
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState('')
-    const [error, setError] = useState('')
-    const [success, setSuccess] = useState('')
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
-    const handleSubmitLoginForm = async (event) => {
-        event.preventDefault()
-        setError('')
-        setSuccess('')
+    const handleSubmitLoginForm = async (e) => {
+        e.preventDefault()
+        const form_HTML = e.target
+        const form_Values = new FormData(form_HTML)
 
-        if (!email || !/\S+@\S+\.\S+/.test(email)) {
-            setError('Please enter a valid email address')
+        const form_fields = {
+            email: ''
+        }
+
+        const form_values_object = extractFormData(form_fields, form_Values)
+
+        if (!form_values_object.email) {
+            setError("Email is required.")
             return
         }
 
+        setLoading(true)
         try {
-            const body = await POST(`${ENVIRONMENT.URL_BACK}/api/auth/forgot-password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...getUnnauthenticatedHeaders(),
-                },
-                body: JSON.stringify({ email })
+            // Send request to reset password
+            const response = await POST(`${ENVIROMENT.URL_BACK}api/auth/forgot-password`, {
+                headers: getUnnauthenticatedHeaders(),
+                body: JSON.stringify(form_values_object)
             })
 
-            if (body && body.ok) {
-                setSuccess('Password reset link sent successfully')
-                setEmail('')
-            } else {
-                setError(body?.errors?.[0] || 'Failed to send reset link')
+            if (!response.ok) {
+                setError("Failed to send reset email. Please try again.")
+                return
             }
+
+            // Send email notification
+            const emailResponse = await sendEmailForgot(form_values_object)
+
+            if (!emailResponse.ok) {
+                setError("There was an issue sending the email. Please try again later.")
+                return
+            }
+
+            console.log({ emailResponse })
+            // Optionally, redirect the user to a success page or show a success message
         } catch (error) {
-            setError(error?.message || 'An unexpected error occurred')
+            setError("An unexpected error occurred. Please try again.")
             console.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
-        <div className="forgot-password-container">
-            <h1>Forgot Password</h1>
-            <p>Enter your email and we'll send you a link to reset your password.</p>
-            
+        <div>
+            <h1>Olvidé mi contraseña</h1>
+            <p>Enviaremos un mail a tu email de usuario para enviarte los pasos de restablecimiento de la contraseña.</p>
+
+            {error && <div style={{ color: 'red' }}>{error}</div>}
+
             <form onSubmit={handleSubmitLoginForm}>
                 <div>
-                    <label htmlFor='email'>Email:</label>
-                    <input 
-                        type="email"
-                        name='email' 
-                        id='email' 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder='john@gmail.com' 
+                    <label htmlFor='email'>Ingrese su email:</label>
+                    <input
+                        name='email'
+                        id='email'
+                        placeholder='pepe@gmail.com'
+                        type='email'
                         required
                     />
                 </div>
-                
-                {error && <div className="error-message">{error}</div>}
-                {success && <div className="success-message">{success}</div>}
-                
-                <button type='submit'>Send Reset Link</button>
+
+                <button type='submit' disabled={loading}>
+                    {loading ? "Enviando..." : "Enviar mail"}
+                </button>
             </form>
-            
-            <div className="form-links">
-                <span>Don't have an account? <Link to='/register'>Register</Link></span>
-                
-                <span>Already have an account? <Link to='/login'>Login</Link></span>
-            </div>
+
+            <span>Si tienes cuenta puedes <Link to='/login'>iniciar sesión</Link></span>
+            <span>Si aún no tienes cuenta puedes <Link to='/register'>registrarte</Link></span>
         </div>
     )
 }
 
 export default ForgotPassword
-

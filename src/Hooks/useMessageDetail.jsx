@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-
 import { useNavigate } from "react-router-dom"
 import ENVIROMENT from "../enviroment"
 import { GET, getUnnauthenticatedHeaders } from "../Fetching/http.fetching"
 
-const usemessageDetail = (message_id) =>{
+const getMessageDetail = (message_id) =>{
     const [message_detail_state, setmessageDetailState] = useState(null)
     const [message_detail_loading, setmessageDetailLoading] = useState(true)
     const [message_detail_error, setmessageDetailError] = useState(null)
@@ -21,8 +20,6 @@ const usemessageDetail = (message_id) =>{
             setmessageDetailState(message_detail_response.payload.message)
         }   
         else{
-            //navigate('/home')
-
             setmessageDetailError(message_detail_response.payload.detail)
         }
     }
@@ -40,4 +37,4 @@ const usemessageDetail = (message_id) =>{
     }
 }
 
-export default usemessageDetail
+export default getMessageDetail
