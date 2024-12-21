@@ -1,0 +1,32 @@
+.data {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+.message-right {
+    background-color: #80C4E9;
+    align-self: flex-end;
+}
+
+.message-left {
+    background-color: #604CC3;
+    align-self: flex-start;
+}
+
+.author {
+    font-weight:300;
+    margin-bottom: 5px;
+}
+
+.content {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.date-status {
+    font-size: 10px;
+    color: black;
+}
+
+

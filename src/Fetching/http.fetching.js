@@ -71,14 +71,14 @@ export const DELETE = async (URL_BACK, params) => {
 const getUnnauthenticatedHeaders = () => {
     const unnauthenticatedHeaders = new Headers()
     unnauthenticatedHeaders.set('Content-Type', 'application/json')
-    unnauthenticatedHeaders.set('x-api-key', '2cec07f3-b63f-4694-a841-5b66a8d5ba53')
+    unnauthenticatedHeaders.set('x-api-key', '33df24d1-6c86-4cfb-81cf-a85457cba52b')
     return unnauthenticatedHeaders
 }
 
 const getAuthenticatedHeaders = () => {
     const authenticatedHeaders = new Headers()
     authenticatedHeaders.set('Content-Type', 'application/json')
-    authenticatedHeaders.set('x-api-key', '2cec07f3-b63f-4694-a841-5b66a8d5ba53')
+    authenticatedHeaders.set('x-api-key', '33df24d1-6c86-4cfb-81cf-a85457cba52b')
     authenticatedHeaders.set('Authorization', 'Bearer ' + sessionStorage.getItem('access_token'))
     return authenticatedHeaders
 }

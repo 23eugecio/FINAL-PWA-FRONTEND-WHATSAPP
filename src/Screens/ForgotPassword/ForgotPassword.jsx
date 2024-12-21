@@ -1,86 +1,55 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { extractFormData } from '../../utils/extractFormData'
+import { POST, getUnnauthenticatedHeaders } from '../../Fetching/http.fetching'
+import ENVIROMENT from '../../enviroment'
+import './ForgotPassword.css'
 
 const ForgotPassword = () => {
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(false)
+	const handleSubmitForgotPasswordForm = async (e) => {
+		try {
+			e.preventDefault()
+			const form_HTML = e.target
+			const form_Values = new FormData(form_HTML)
+			const form_fields = {
+				'email': ''
+			}
+			const navigate = useNavigate()
+			const form_values_object = extractFormData(form_fields, form_Values)
+			console.log(form_values_object)
+			const body = await POST(`${ENVIROMENT.URL_BACK}/api/auth/forgot-password`,
+				{
+					headers: getUnnauthenticatedHeaders(),
+					body: JSON.stringify(form_values_object)
+				})
+			if (!body.ok) {
+				setError(body.message)
+			}
+			console.log({ body })
+		}
+		catch (error) {
+			console.error(error)
+		}
+	}
 
-    const handleSubmitLoginForm = async (e) => {
-        e.preventDefault()
-        const form_HTML = e.target
-        const form_Values = new FormData(form_HTML)
+	return (
+		<div className='forgot-password-container'>
+			<h1>Forgot your Password?</h1>
+			<p>We will send you an email to reset your password, please verify your email!</p>
+			<form onSubmit={handleSubmitForgotPasswordForm}>
+				<div>
+					<label htmlFor='email'>Enter your email:</label>
+					<input name='email' id='email' placeholder='pepe@gmail.com' />
+				</div>
+				<button type='submit'>Send!</button>
+				<div className='login'>If you already have an account...  <Link to='/login'>Login!</Link></div>
+				<div>Don't have an account yet!          <Link to='/register'>Register!</Link></div>
+				<div>
+				</div>
+			</form>
+		</div>
 
-        const form_fields = {
-            email: ''
-        }
-
-        const form_values_object = extractFormData(form_fields, form_Values)
-
-        if (!form_values_object.email) {
-            setError("Email is required.")
-            return
-        }
-
-        setLoading(true)
-        try {
-            // Send request to reset password
-            const response = await POST(`${ENVIROMENT.URL_BACK}api/auth/forgot-password`, {
-                headers: getUnnauthenticatedHeaders(),
-                body: JSON.stringify(form_values_object)
-            })
-
-            if (!response.ok) {
-                setError("Failed to send reset email. Please try again.")
-                return
-            }
-
-            // Send email notification
-            const emailResponse = await sendEmailForgot(form_values_object)
-
-            if (!emailResponse.ok) {
-                setError("There was an issue sending the email. Please try again later.")
-                return
-            }
-
-            console.log({ emailResponse })
-            // Optionally, redirect the user to a success page or show a success message
-        } catch (error) {
-            setError("An unexpected error occurred. Please try again.")
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    return (
-        <div>
-            <h1>Olvidé mi contraseña</h1>
-            <p>Enviaremos un mail a tu email de usuario para enviarte los pasos de restablecimiento de la contraseña.</p>
-
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-
-            <form onSubmit={handleSubmitLoginForm}>
-                <div>
-                    <label htmlFor='email'>Ingrese su email:</label>
-                    <input
-                        name='email'
-                        id='email'
-                        placeholder='pepe@gmail.com'
-                        type='email'
-                        required
-                    />
-                </div>
-
-                <button type='submit' disabled={loading}>
-                    {loading ? "Enviando..." : "Enviar mail"}
-                </button>
-            </form>
-
-            <span>Si tienes cuenta puedes <Link to='/login'>iniciar sesión</Link></span>
-            <span>Si aún no tienes cuenta puedes <Link to='/register'>registrarte</Link></span>
-        </div>
-    )
+	)
 }
 
 export default ForgotPassword

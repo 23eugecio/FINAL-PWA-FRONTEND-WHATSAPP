@@ -1,6 +1,5 @@
-
 :root {
-    --primary-color: #25D366;
+    --primary-color: #24b459;
     --secondary-color: #075E54;
     --background-color: #f5f5f5;
     --text-color: #333;
@@ -30,7 +29,7 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 900px;
     padding: 2rem;
     box-sizing: border-box;
     display: flex;
@@ -45,7 +44,8 @@ form label {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: bold;
+    font-size: medium;
 }
 
 form input {
@@ -53,7 +53,7 @@ form input {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 25px;
     transition: border-color 0.3s ease;
 }
 
@@ -68,9 +68,9 @@ form button[type="submit"] {
     padding: 0.75rem;
     background-color: var(--primary-color);
     color: white;
-    border: none;
+    border: black;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 1rem;
@@ -83,22 +83,28 @@ form button[type="submit"]:hover {
 form span {
     text-align: center;
     margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
+    font-size: 20px;
+    color: var(--primary-color);
 }
 
 form span button {
     background: none;
     border: none;
-    color: var(--primary-color);
-    font-weight: 600;
+    color: white;
+    font: weight 700px;;
     cursor: pointer;
     padding: 0;
     margin-left: 0.25rem;
 }
 
+a{
+    text-decoration: none;
+    color: var( --primary-color);
+    font-size: 25px;
+}
+
 form span button a {
-    color: var(--primary-color);
+    color: green;
     text-decoration: none;
 }
 
@@ -124,15 +130,75 @@ form span button a:hover {
         font-size: 0.95rem;
         padding: 0.65rem;
     }
+
+    form span button {
+        background: none;
+        border: none;
+        color: white;
+        font: weight 200px;;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 0.25rem;
+    }
+    span{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+    }
+
+    a{
+        text-decoration: none;
+        color: var( --primary-color);
+        font-size: 15px;
+    }
+    }
+    
+    form span button a {
+        color: green;
+        text-decoration: none;
+    }
+
+
+@media screen and (min-width: 601px) and (max-width: 1200px) {
+    form {
+        padding: 2rem;
+        max-width: 80%;
+    }
+
+    .login-container h1 {
+        font-size: 1.8rem;
+    }
+
+    form input,
+    form button[type="submit"] {
+        font-size: 1.1rem;
+    }
 }
 
+@media screen and (min-width: 1201px) {
+    form {
+        padding: 2.5rem;
+        max-width: 70%;
+    }
+
+    .login-container h1 {
+        font-size: 2.2rem;
+    }
+
+    form input,
+    form button[type="submit"] {
+        font-size: 1.25rem;
+    }
+}
 
 input:focus,
 button:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
-
 
 @media (prefers-color-scheme: dark) {
     .login-container {

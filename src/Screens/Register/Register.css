@@ -30,7 +30,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 1000px;
     padding: 2rem;
     box-sizing: border-box;
     display: flex;
@@ -45,7 +45,7 @@
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 70px;
 }
 
 .register-form form input {
@@ -53,7 +53,7 @@
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 15px;
     transition: border-color 0.3s ease;
 }
 
@@ -70,7 +70,7 @@
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 1rem;
@@ -83,7 +83,7 @@
 .register-form span {
     text-align: center;
     margin-top: 1rem;
-    font-size: 0.9rem;
+    font-size: 20px;
     color: var(--text-color);
 }
 
@@ -95,6 +95,14 @@
 
 .register-form span a:hover {
     text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 @media screen and (max-width: 600px) {

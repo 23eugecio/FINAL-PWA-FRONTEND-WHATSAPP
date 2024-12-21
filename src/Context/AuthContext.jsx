@@ -1,23 +1,24 @@
 import { useContext, createContext, useState, useEffect } from "react";
 
-export const AuthContext  = createContext()
 
-export const AuthContextProvider = ({children}) =>{
+
+export const AuthContext = createContext()
+
+
+export const AuthContextProvider = ({ children }) => {
     const access_token = sessionStorage.getItem('access_token')
     const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(
         Boolean(access_token)
     )
 
-    useEffect(
-        () => {
-            const access_token = sessionStorage.getItem('access_token')
-            if(access_token) {
-                setIsAuthenticatedUser(true)
-            }
-        }, 
-        []
-    )
-    const logout = () =>{
+    useEffect(() => {
+        const access_token = sessionStorage.getItem("access_token");
+        if (access_token) {
+            setIsAuthenticatedUser(true);
+        }
+    }, [access_token]);
+
+    const logout = () => {
         sessionStorage.removeItem('access_token')
         setIsAuthenticatedUser(false)
     }
@@ -33,4 +34,9 @@ export const AuthContextProvider = ({children}) =>{
 }
 
 export const useAuthContext = () => {
-    return useContext(AuthContext) }
+    return useContext(AuthContext)
+}
+
+
+
+

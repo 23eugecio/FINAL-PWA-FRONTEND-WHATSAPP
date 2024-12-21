@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import ENVIROMENT from "../enviroment"
 import { GET, getUnnauthenticatedHeaders } from "../Fetching/http.fetching"
 
@@ -22,6 +22,7 @@ const getMessageDetail = (message_id) =>{
         else{
             setmessageDetailError(message_detail_response.payload.detail)
         }
+        Navigate('/contact-home')
     }
 
     useEffect(

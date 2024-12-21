@@ -1,0 +1,84 @@
+.footerMessage {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 8px;
+}
+
+.footerMessage .message-input {
+    display: flex;
+    background-color: #54473F;
+    color: #FFF6E9;
+    width: 100%;
+    height: 40px;
+    border-radius: 80px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0, 10px;
+}
+
+.footerMessage .message-input .message-field {
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    color: whitesmoke;
+    outline: transparent;
+    flex-grow: 1;
+    width: 720px;
+    margin: 0, 10px;
+    padding: 0px 0px 0px 20px
+}
+
+.footerMessage .message-input .message-field {
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    color: white;
+    outline: transparent;
+    flex-grow: 1;
+    width: 720px;
+}  
+
+.footerMessage .message-input .message-field::placeholder {
+    color: whitesmoke;
+    font-size: 12px;
+}
+
+.footerMessage .message-input button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.footerMessage .message-input .emojis i {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+    padding: 0px 0px 0px 20px
+}
+
+.footerMessage .message-input .camera i {
+    border-radius: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    color: white
+}
+
+.footerMessage .message-input .files i {
+    border-radius: 80px;
+    color: whitesmoke
+}
+
+.footerMessage .send i {
+        color: white;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 20px;
+}
+

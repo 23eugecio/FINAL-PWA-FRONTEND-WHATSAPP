@@ -1,0 +1,105 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    background-color: #604CC3; 
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.whatsapp .header {
+    display: flex;
+    flex-direction: row;
+    background-color: #604CC3;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.whatsapp .header button {
+    background-color: transparent;
+    color: whitesmoke;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid  ;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px; 
+    background-color: whitesmoke;
+}
+
+.whatsapp {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    color: whitesmoke;
+    font-weight: 500;
+
+}
+
+
+/* .whatsapp .header .back {
+    color: whitesmoke;
+    margin: 10px;
+    padding: 2px;
+    font-size: 20px;
+} */
+
+.whatsapp .header .back i {
+    color: whitesmoke;
+    font-size: 20px;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.header_contact_name{
+    color: whitesmoke;
+    font-size: 13px;
+    padding-left: 5px;
+}
+
+.whatsapp .header .icons {
+    color: white;
+    margin: 10px;
+    padding: 2px;
+    font-size: 8px;
+}
+
+
+@media screen and (max-width: 2000px) {
+
+    .header{
+        display: flex;
+        flex-direction: row;
+        background-color: #604CC3; ;
+        width: 100%;
+        height: 100px;
+        align-items: center;
+        justify-content: space-between; 
+    }
+    .whatsapp .header {
+        display: flex;
+        flex-direction: row;
+        background-color: #604CC3;
+        width: 100%;
+        height: 60px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    
+}

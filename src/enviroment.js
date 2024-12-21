@@ -1,7 +1,7 @@
 
 const ENVIROMENT = {
-    'URL_BACK' : 'https://localhost:3000',
-    'URL_FRONT' : 'https://localhost:5173'
+    'URL_BACK': 'http://localhost:3000',
+    'URL_FRONT': 'http://localhost:5173'
 }
 
 
