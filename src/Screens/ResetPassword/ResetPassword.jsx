@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { extractFormData } from '../../utils/extractFormData'
-import { getAuthenticatedHeaders } from '../../Fetching/http.fetching'
+import { getAuthenticatedHeaders, PUT } from '../../Fetching/http.fetching'
 import ENVIROMENT from '../../enviroment'
+import '../GlobalStyle/GlobalStyle.css'
+
 
 const ResetPassword = () => {
     const { reset_token } = useParams()

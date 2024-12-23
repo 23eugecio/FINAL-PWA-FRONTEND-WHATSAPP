@@ -1,12 +1,4 @@
-
-:root {
-    --primary-color: #25D366;
-    --secondary-color: #075E54;
-    --background-color: #f5f5f5;
-    --text-color: #333;
-    --error-color: #dc3545;
-}
-
+/* 
 .register-form {
     display: flex;
     flex-direction: column;
@@ -157,4 +149,4 @@
     .register-form span {
         color: #e0e0e0;
     }
-}
+} */

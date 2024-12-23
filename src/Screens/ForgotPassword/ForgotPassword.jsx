@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { extractFormData } from '../../utils/extractFormData'
 import { POST, getUnnauthenticatedHeaders } from '../../Fetching/http.fetching'
 import ENVIROMENT from '../../enviroment'
-import './ForgotPassword.css'
+import '../GlobalStyle/GlobalStyle.css'
 
 const ForgotPassword = () => {
 	const handleSubmitForgotPasswordForm = async (e) => {

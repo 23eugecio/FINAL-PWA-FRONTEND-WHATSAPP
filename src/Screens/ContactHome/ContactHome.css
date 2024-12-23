@@ -1,8 +1,8 @@
-
+/* 
 :root {
     --bg-primary: #111b21;
     --bg-secondary: #202c33;
-    --text-primary: #e9edef;
+    --text-primary: #21b124;
     --text-secondary: #8696a0;
     --accent-color: #00a884;
     --error-color: #f15c6d;
@@ -258,4 +258,4 @@ form {
 .contacts-list {
     scrollbar-width: thin;
     scrollbar-color: var(--accent-color) var(--bg-secondary);
-}  
+}   */

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './ContactHome.css';
+import '../GlobalStyle/GlobalStyle.css';
 
 const ContactHome = () => {
     const [allContacts, setAllContacts] = useState([]);
@@ -97,7 +97,7 @@ const ContactHome = () => {
         <div className="contacts-container">
             <header className="contacts-header">
                 <h1>Contacts</h1>
-                <button onClick={handleAddContact}>Add Contact</button>
+                <button className="add-button" onClick={handleAddContact}>Add Contact</button>
             </header>
 
             <input
@@ -137,9 +137,8 @@ const ContactHome = () => {
             <div className="contacts-list">
                 {visibleContacts.map(contact => (
                     <Link to={'/chat/' + contact.id} className="contact-card" key={contact.id}>
+                        <img className="contact-image" src={contact.image || '/ImageContacts/default.jpg'} alt={''} />
                         <h3>{contact.name}</h3>
-                        <p>{contact.email}</p>
-                        <img src={contact.image || '/ImageContacts/default.jpg'} alt={contact.name} />
                         <button onClick={(e) => { e.preventDefault(); handleEdit(contact); }}>Edit</button>
                     </Link>
                 ))}
