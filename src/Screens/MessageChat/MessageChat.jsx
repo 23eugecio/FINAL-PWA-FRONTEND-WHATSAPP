@@ -3,6 +3,7 @@ import { Send, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
 import './MessageChat.css';
+import ENVIROMENT from '../../enviroment';
 
 
 const Chat = ({ receiverId, currentUser }) => {
@@ -35,7 +36,7 @@ const Chat = ({ receiverId, currentUser }) => {
                 throw new Error('No authentication token found');
             }
 
-            const response = await POST(`/api/messages/conversation/${receiverId}`, {
+            const response = await POST(`${ENVIROMENT.URL_BACK}/api/messages/conversation/${receiverId}`, {
                 headers: getUnnauthenticatedHeaders(),
                 body: JSON.stringify({
                     user_id: sessionStorage.getItem('user_id')
@@ -80,7 +81,7 @@ const Chat = ({ receiverId, currentUser }) => {
                 throw new Error('No authentication token found');
             }
 
-            const response = await POST('/api/messages', 
+            const response = await POST(`${ENVIROMENT.URL_BACK}/api/messages`, 
                 {
                 headers: getUnnauthenticatedHeaders(),
                 body: JSON.stringify(
