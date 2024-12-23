@@ -26,7 +26,8 @@ export const AuthContextProvider = ({ children }) => {
     return (
         <AuthContext.Provider value={{
             logout,
-            isAuthenticatedUser
+            isAuthenticatedUser,
+            setIsAuthenticatedUser
         }} >
             {children}
         </AuthContext.Provider>
@@ -36,7 +37,6 @@ export const AuthContextProvider = ({ children }) => {
 export const useAuthContext = () => {
     return useContext(AuthContext)
 }
-
 
 
 

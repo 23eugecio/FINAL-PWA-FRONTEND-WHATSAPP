@@ -6,14 +6,19 @@ import ForgotPassword from './Screens/ForgotPassword/ForgotPassword'
 import Contacts from './Screens/ContactHome/ContactHome'
 import ProtectedRoute from './components/ProtectedRoute'
 import ResetPassword from './Screens/ResetPassword/ResetPassword'
-import MessageList from './Screens/Message/MessageList'
 import ContactHome from './Screens/ContactHome/ContactHome'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import MessageChat from './Screens/MessageChat/MessageChat'
+import { AuthContextProvider } from './Context/AuthContext'
+import ChatComponent from './Screens/ChatComponent/ChatComponent'
+
+
 
 function App() {
 
     return (
         <>
+        <AuthContextProvider>
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -23,10 +28,11 @@ function App() {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/contact-home" element={<ContactHome />} />
-                    <Route path="/contactList/:contact_id" element={<Contacts />} />
-                    <Route path="/message/:contact_id" element={<MessageList />} />
+                    <Route path="/chat/:id" element={<ChatComponent />} />
+                    <Route path="/message-chat/:id" element={<MessageChat />} />
                 </Route>
             </Routes>
+        </AuthContextProvider>
         </>
     )
 }

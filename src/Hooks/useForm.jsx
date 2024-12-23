@@ -16,7 +16,8 @@ const useForm = (form_fields) => {
 
     return {
         form_values_state,
-        handleChangeInputValue
+        handleChangeInputValue,
+        setFormValuesState
     }
 }
 

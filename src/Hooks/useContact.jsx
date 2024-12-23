@@ -36,6 +36,9 @@ const useContact = () => {
         contacts,
         isLoading,
         error,
+        setContacts,
+        setError,
+        setIsLoading,
     };
 };
 

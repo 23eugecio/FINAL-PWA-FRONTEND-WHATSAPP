@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { extractFormData } from '../../utils/extractFormData'
 import { getAuthenticatedHeaders } from '../../Fetching/http.fetching'
@@ -6,8 +6,8 @@ import ENVIROMENT from '../../enviroment'
 
 const ResetPassword = () => {
     const { reset_token } = useParams()
-    const [successMessage, setSuccessMessage] = React.useState('')
-    const [errorMessage, setError] = React.useState('')
+    const [successMessage, setSuccessMessage] = useState('')
+    const [errorMessage, setError] = useState('')
     const handleSubmitResetForm = async (e) => {
         try{
         e.preventDefault()
@@ -28,7 +28,12 @@ const ResetPassword = () => {
         })
         if(response.ok){
             setSuccessMessage('Password reset successfully!')
-        } else  {
+            console.log(successMessage)
+        }
+        if(errorMessage){
+            console.log(errorMessage)
+        } 
+        else{
             setError('Password reset failed!')
         }
         console.log(response)
@@ -40,18 +45,18 @@ const ResetPassword = () => {
     
     return (
         <div>
-            <h1>Restablecer contraseña</h1>
-            <p>Completa el formulario con la nueva contraseña para restablecerla.</p>
+            <h1>Reset your password</h1>
+            <p>Complete the form below to reset your password.</p>
             <form onSubmit={handleSubmitResetForm}>
                 <div>
-                    <label htmlFor='password'>Ingrese su nueva contraseña:</label>
+                    <label htmlFor='password'>Enter your new password:</label>
                     <input name='password' id='password' placeholder='contraseña' />
                 </div>
-                <button type='submit'>Restablecer contraseña</button>
+                <button type='submit'>Reset Password</button>
             </form>
-            <span>Si recuerdas tu contraseña <Link to='/login'>iniciar sesion</Link></span>
-            <span>Si aun no tienes cuenta puedes <Link to='/register'>Registrarte</Link></span>
-
+            <span>If you already have an account, please <Link to='/login'>Login</Link></span>
+            <span>If you don't have an account, please <Link to='/register'>Register</Link></span>
+        {successMessage && <p>{successMessage}</p>}
         </div>
     )
 }

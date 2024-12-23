@@ -17,81 +17,75 @@ const Register = () => {
 
     const handleSubmitRegisterForm = async (event) => {
         event.preventDefault();
+        const form_HTML = event.target;
+        const form_values = new FormData(form_HTML);
+        const form_values_object = extractFormData(form_fields, form_values);
 
-        try {
-            const form_HTML = event.target;
-            const form_values = new FormData(form_HTML);
-            const form_values_object = extractFormData(form_fields, form_values);
+        console.log('Sending registration data:', form_values_object);
 
-            console.log('Sending registration data:', form_values_object);
+        const response = await POST(
+            `${ENVIROMENT.URL_BACK}/api/auth/register`,
+            {
+                headers: getUnnauthenticatedHeaders(),
+                body: JSON.stringify(form_values_object)
+            })
 
-            const response = await POST(
-                `${ENVIROMENT.URL_BACK}/api/auth/register`,
-                {
-                    headers: getUnnauthenticatedHeaders(),
-                    body: JSON.stringify(form_values_object)
-                }
-            );
+            console.log(response)
 
-            if (!response.ok) {
-                throw new Error('Registration failed');
+            if(response.ok) {
+                navigate('/login');
+            } else{
+                console.log(response.message)
             }
-
-            console.log('Registration successful:', response.json);
-            navigate('/login');
-
-        } catch (error) {
-            console.error('Registration error:', error);
-        }
     };
 
-    return (
-        <div className="register-form">
-            <h1>WhatsApp Register!</h1>
-            <form onSubmit={handleSubmitRegisterForm}>
-                <div>
-                    <label htmlFor="name">Write your name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="name"
-                        onChange={handleChangeInputValue}
-                        value={form_values_state.name}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email">Write your email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="JohnDoe@gmail.com"
-                        onChange={handleChangeInputValue}
-                        value={form_values_state.email}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">Write your password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Password!"
-                        onChange={handleChangeInputValue}
-                        value={form_values_state.password}
-                        required
-                    />
-                </div>
-                <button type="submit">Register!</button>
-            </form>
-            <span>
-                If you already have an account <Link to="/login">Login!</Link>
-            </span>
-        </div>
-    );
+return (
+    <div className="register-form">
+        <h1>WhatsApp Register!</h1>
+        <form onSubmit={handleSubmitRegisterForm}>
+            <div>
+                <label htmlFor="name">Write your name:</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="name"
+                    onChange={handleChangeInputValue}
+                    value={form_values_state.name}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="email">Write your email:</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="JohnDoe@gmail.com"
+                    onChange={handleChangeInputValue}
+                    value={form_values_state.email}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="password">Write your password:</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password!"
+                    onChange={handleChangeInputValue}
+                    value={form_values_state.password}
+                    required
+                />
+            </div>
+            <button type="submit">Register!</button>
+        </form>
+        <span>
+            If you already have an account <Link to="/login">Login!</Link>
+        </span>
+    </div>
+);
 };
 
 export default Register;
