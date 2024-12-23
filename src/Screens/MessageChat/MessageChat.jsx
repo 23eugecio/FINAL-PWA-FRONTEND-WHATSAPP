@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import './MessageChat.css';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
-
+import './MessageChat.css';
 
 
 const Chat = ({ receiverId, currentUser }) => {
