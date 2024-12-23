@@ -33,6 +33,12 @@
     font-size: 1.75rem;
 }
 
+.span{
+    color: green
+}
+.a{
+    color:antiquewhite
+}
 .form-group {
     margin-bottom: 1rem;
 }

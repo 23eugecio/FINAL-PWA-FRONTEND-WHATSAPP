@@ -29,16 +29,12 @@ const Register = () => {
                 headers: getUnnauthenticatedHeaders(),
                 body: JSON.stringify(form_values_object)
             })
-
-            console.log(response)
-
             if(response.ok) {
                 navigate('/login');
             } else{
                 console.log(response.message)
             }
-    };
-
+        }
 return (
     <div className="register-form">
         <h1>WhatsApp Register!</h1>
@@ -86,6 +82,8 @@ return (
         </span>
     </div>
 );
+
 };
 
 export default Register;
+
