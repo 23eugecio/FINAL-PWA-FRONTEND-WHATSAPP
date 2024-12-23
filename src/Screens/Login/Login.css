@@ -1,0 +1,147 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.login-container form {
+    max-width: 400px;
+    width: 100%;
+    padding: 32px;
+    background-color: var(--header-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.login-container h1 {
+    color: var(--text-primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error-modal {
+    background-color: var(--header-bg);
+    border: 1px solid var(--error-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.error-modal p {
+    color: var(--error-color);
+    margin-bottom: 12px;
+}
+
+.error-modal button {
+    width: 100%;
+    background-color: var(--error-color);
+}
+
+.login-container span {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    color: var(--text-secondary);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .login-container form {
+        padding: 20px;
+    }
+
+    .login-container h1 {
+        font-size: 20px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+    .login-container form {
+        max-width: 500px;
+        padding: 30px;
+    }
+}
+
+/* Small Desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .login-container form {
+        max-width: 550px;
+        padding: 35px;
+    }
+
+    .login-container h1 {
+        font-size: 26px;
+    }
+}
+
+/* Medium Desktop */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .login-container form {
+        max-width: 600px;
+        padding: 40px;
+    }
+
+    .login-container h1 {
+        font-size: 28px;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    button {
+        padding: 14px 24px;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1441px) and (max-width: 2000px) {
+    .login-container {
+        padding: 60px 20px;
+    }
+
+    .login-container form {
+        max-width: 700px;
+        padding: 48px;
+    }
+
+    .login-container h1 {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    input {
+        padding: 16px 20px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 16px 28px;
+        font-size: 16px;
+    }
+
+    .login-container span {
+        font-size: 16px;
+        margin-top: 16px;
+    }
+
+    .error-modal {
+        padding: 20px;
+    }
+
+    .error-modal p {
+        font-size: 16px;
+    }
+}
