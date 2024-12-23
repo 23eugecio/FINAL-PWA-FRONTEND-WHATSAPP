@@ -3,7 +3,7 @@
     --primary-color: #25D366;
     --secondary-color: #075E54;
     --background-color: #f5f5f5;
-    --text-color: #333;
+    --text-color: #2ca84b;
     --error-color: #dc3545;
 }
 
@@ -95,6 +95,10 @@ form span button {
     cursor: pointer;
     padding: 0;
     margin-left: 0.25rem;
+}
+
+a{
+    color: greenyellow
 }
 
 form span button a {

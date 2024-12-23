@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
-import '../MessageChat.css';
+import './MessageChat.css';
 import ENVIROMENT from '../../enviroment';
 
 
