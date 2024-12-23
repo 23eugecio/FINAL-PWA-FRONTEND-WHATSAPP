@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import './ChatComponent.css';
+import '../MessageChat/MessageChat.css';
 
 const ChatComponent = ({ allContacts }) => {
     const [messages, setMessages] = useState([]);

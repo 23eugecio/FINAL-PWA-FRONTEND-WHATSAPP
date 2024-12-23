@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { extractFormData } from '../../utils/extractFormData'
 import { getAuthenticatedHeaders, PUT } from '../../Fetching/http.fetching'
 import ENVIROMENT from '../../enviroment'
-import './ResetPassword.css'
+import '../ResetPassword/ResetPassword.css'
 
 
 const ResetPassword = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { extractFormData } from '../../utils/extractFormData.js';
 import ENVIROMENT from '../../enviroment.js';
-import './Login.css';
+import '../Login/Login.css';
 import { getAuthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
 
 const Login = () => {

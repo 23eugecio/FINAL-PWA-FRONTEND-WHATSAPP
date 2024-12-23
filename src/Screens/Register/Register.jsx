@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './Register.css'
+import '../Register/Register.css';
 import ENVIROMENT from '../../enviroment.js';
 import useForm from '../../Hooks/useForm.jsx';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
