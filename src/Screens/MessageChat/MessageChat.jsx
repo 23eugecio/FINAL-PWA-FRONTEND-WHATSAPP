@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
 import './MessageChat.css';
 import ENVIROMENT from '../../enviroment';
-
+import '../../App.css';
 
 const Chat = ({ receiverId, currentUser }) => {
     const [messages, setMessages] = useState([]);

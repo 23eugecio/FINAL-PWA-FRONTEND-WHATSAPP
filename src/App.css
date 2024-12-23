@@ -1,0 +1,19 @@
+:root {
+    --whatsapp-green-primary: #25D366;
+    --whatsapp-green-secondary: #128C7E;
+    --background-gray: #696d74;
+    --text-gray: #4a4a4a;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-gray);
+    line-height: 1.6;
+    color: var(--text-gray);
+}

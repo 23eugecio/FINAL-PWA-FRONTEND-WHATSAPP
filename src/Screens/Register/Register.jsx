@@ -4,7 +4,7 @@ import ENVIROMENT from '../../enviroment.js';
 import useForm from '../../Hooks/useForm.jsx';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
 import { extractFormData } from '../../utils/extractFormData.js';
-
+import '../../App.css';
 const Register = () => {
     const form_fields = {
         'name': '',

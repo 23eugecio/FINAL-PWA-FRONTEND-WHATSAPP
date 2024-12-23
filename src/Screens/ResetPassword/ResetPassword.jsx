@@ -4,7 +4,7 @@ import { extractFormData } from '../../utils/extractFormData'
 import { getAuthenticatedHeaders, PUT } from '../../Fetching/http.fetching'
 import ENVIROMENT from '../../enviroment'
 import './ResetPassword.css'
-
+import '../../App.css'
 
 const ResetPassword = () => {
     const { reset_token } = useParams()
