@@ -1,14 +1,7 @@
-:root {
-    --primary-color: #25D366;
-    --secondary-color: #075E54;
-    --background-color: #f5f5f5;
-    --text-color: #333;
-    --error-color: #dc3545;
-}
 
 .contacts-container {
     min-height: 100vh;
-    background-color: var(--background-color);
+    background-color: #f5f5f5;
     padding: 1rem;
 }
 
@@ -20,13 +13,13 @@
 }
 
 .contacts-header h1 {
-    color: var(--secondary-color);
+    color: #075E54;
     font-size: 1.8rem;
     margin: 0;
 }
 
 .add-button {
-    background-color: var(--primary-color);
+    background-color: #25D366;
     color: white;
     border: none;
     border-radius: 4px;
@@ -36,7 +29,7 @@
 }
 
 .add-button:hover {
-    background-color: var(--secondary-color);
+    background-color: #075E54;
 }
 
 .contacts-container input[type="text"],
@@ -70,7 +63,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--text-color);
+    color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
 }
@@ -93,7 +86,7 @@
 }
 
 .contact-card button {
-    background-color: var(--primary-color);
+    background-color: #25D366;
     color: white;
     border: none;
     border-radius: 4px;
@@ -118,7 +111,7 @@
     }
 
     .contacts-header h1 {
-        color: var(--primary-color);
+        color: #25D366;
     }
 
     .contact-card, .contacts-container form {
