@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
-import '../MessageChat/MessageChat.css';
+import './MessageChat.css';
 
 
 const Chat = ({ receiverId, currentUser }) => {
