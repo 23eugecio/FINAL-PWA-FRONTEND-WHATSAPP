@@ -1,0 +1,7 @@
+¡Hola Profe! Con respecto al trabajo final, funcionaba perfecto en local, pero cuando hice el despliegue del Front, empezó a tirar el mismo error que me persiguió durante todo el armado del proyecto, el Fetch. Intenté hacer diferentes tipos de fetching, pero siempre volvía a como nos había enseñado, ¡empezo a funcionar desde el local y se guardan los contactos y mensajes cargados en el sessionStorage!, también cuando hice el despliegue del Front empezó a tirar un error con la carpeta del MessageChat, ¡al final desplegue!
+¡¡¡Otro error que tuve fue en el despliegue de la base de datos hasta que me salió!!! 
+A las imágenes se las debo, Mariana me recomendó usar una librería llamaba Cloudinary, ¡¡pero no llegue a hacerlo!!
+Me encanto la cursada, pero me parece que deberían tener en cuenta como Universidad, que la primera etapa nunca tuvimos tutor, y cuando lo tuvimos en la segunda parte finalmente, el, ¡lamentablemente no poseía los elementos (una compu) para poder ver nuestros errores y adivinaba que podía ser!  ¡¡¡Y me hubiera gustado tener más clases de repaso y consulta para el trabajo final como tuvimos en la mitad del año!!! ¡Gracias a mis compañeros, resolví bastante errores y pude seguir adelante! ¡¡Gracias por la extensión del tiempo para poder hacer el trabajo, porque de mi parte no hubiera podido entregar nada!! 
+¡¡¡Seguiré practicando para mejorar día a día!!! ¡¡¡¡Espero que haya pasado unas fiestas muy lindas y que comience un hermoso Año!!!! 
+¡¡¡Hasta la próxima!!!
+¡¡¡¡Ojalá salga el curso de Next!!!!
