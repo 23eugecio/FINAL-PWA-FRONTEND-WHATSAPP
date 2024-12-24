@@ -1,7 +1,7 @@
 
 const ENVIROMENT = {
-    'URL_BACK': 'https://vercel.com/maria-eugenia-ciottis-projects/proyecto-final-back-end',
-    'URL_FRONT': 'https://vercel.com/maria-eugenia-ciottis-projects/final-pwa-frontend-whatsapp-8989'
+    'URL_BACK': 'https://proyecto-final-back-end-olive.vercel.app',
+    'URL_FRONT': 'https://final-pwa-frontend-whatsapp-8989.vercel.app'
 }
 
 
