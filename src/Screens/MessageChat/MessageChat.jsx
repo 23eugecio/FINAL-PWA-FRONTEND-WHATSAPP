@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching';
-import './MessageChat.css';
+/* import './MessageChat.css'; */
 import ENVIROMENT from '../../enviroment';
 import '../../App.css';
 
@@ -87,7 +87,8 @@ const Chat = ({ receiverId, currentUser }) => {
                 body: JSON.stringify(
                     {
                     receiver_id: receiverId,
-                    content: newMessage.trim()
+                    content: newMessage.trim(),
+                    user_info: user_info
                 }
             )
             });

@@ -27,7 +27,7 @@ function App() {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/contact-home" element={<ContactHome />} />
-                    <Route path="/chat/:id" element={<ChatComponent />} />
+                    <Route path="/chatMessage/:id" element={<ChatComponent />} />
                     <Route path="/message-chat/:id" element={<MessageChat />} />
                 </Route>
             </Routes>
