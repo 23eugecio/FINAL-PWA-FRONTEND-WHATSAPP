@@ -16,7 +16,9 @@ export const AuthContextProvider = ({ children }) => {
         if (access_token) {
             setIsAuthenticatedUser(true);
         }
-    }, [access_token]);
+    },
+        []
+    );
 
     const logout = () => {
         sessionStorage.removeItem('access_token')
