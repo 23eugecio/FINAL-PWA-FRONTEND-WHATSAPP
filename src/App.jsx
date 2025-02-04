@@ -8,7 +8,7 @@ import ResetPassword from './Screens/ResetPassword/ResetPassword'
 import ContactHome from './Screens/ContactHome/ContactHome'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import MessageChat from './Screens/MessageChat/MessageChat'
-import { AuthContextProvider } from './Context/AuthContext'
+import { AuthContextProvider } from './context/AuthContext'
 import ChatComponent from './Screens/ChatComponent/ChatComponent'
 
 
@@ -27,7 +27,8 @@ function App() {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/contact-home" element={<ContactHome />} />
-                    <Route path="/chatMessage/:id" element={<ChatComponent />} />
+                    <Route path="/contacts" element={<ContactHome />} />
+                    <Route path="/chat/:contact_id" element={<ChatComponent />} />
                     <Route path="/message-chat/:id" element={<MessageChat />} />
                 </Route>
             </Routes>

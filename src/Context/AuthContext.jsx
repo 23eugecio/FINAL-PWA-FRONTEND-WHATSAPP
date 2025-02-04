@@ -1,44 +1,57 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect, useMemo } from "react";
 
-
-
-export const AuthContext = createContext()
-
+export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-    const access_token = sessionStorage.getItem('access_token')
-    const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(
-        Boolean(access_token)
-    )
+    const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(false);
+    const [currentToken, setCurrentToken] = useState(null);
 
     useEffect(() => {
-        const access_token = sessionStorage.getItem("access_token");
-        if (access_token) {
-            setIsAuthenticatedUser(true);
+        try {
+            const token = sessionStorage.getItem('access_token');
+            if (token) {
+                setCurrentToken(token);
+                setIsAuthenticatedUser(true);
+            }
+        } catch (error) {
+            console.error('Error accessing session storage', error);
         }
-    },
-        []
-    );
+    }, []);
+
+    const login = (userId, token) => {
+        try {
+            sessionStorage.setItem('access_token', token);
+            setCurrentToken(token);
+            setIsAuthenticatedUser(true);
+        } catch (error) {
+            console.error('Error setting session storage', error);
+        }
+    };
 
     const logout = () => {
-        sessionStorage.removeItem('access_token')
-        setIsAuthenticatedUser(false)
-    }
+        try {
+            sessionStorage.removeItem('access_token');
+            setCurrentToken(null);
+            setIsAuthenticatedUser(false);
+        } catch (error) {
+            console.error('Error removing session storage', error);
+        }
+    };
+
+    const getAuthToken = () => currentToken;
+
+    const value = useMemo(() => ({
+        logout, 
+        login,
+        isAuthenticatedUser, 
+        getAuthToken 
+    }), [logout, login, isAuthenticatedUser, getAuthToken]);
 
     return (
-        <AuthContext.Provider value={{
-            logout,
-            isAuthenticatedUser,
-            setIsAuthenticatedUser
-        }} >
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
-export const useAuthContext = () => {
-    return useContext(AuthContext)
-}
-
-
-
+export const useAuthContext = () => useContext(AuthContext);

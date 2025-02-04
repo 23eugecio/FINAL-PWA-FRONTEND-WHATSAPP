@@ -1,42 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {ENVIRONMENT } from '../../environment.js';
 import './ContactHome.css';
 import '../../App.css';
+import { POST } from '../../Fetching/http.fetching.js';
+import useContact from '../../Hooks/useContact';
+import { useAuthContext } from '../../context/AuthContext'; 
+
 const ContactHome = () => {
-    const [allContacts, setAllContacts] = useState([]);
+    const { contacts, isLoading, error, setContacts } = useContact();
     const [showForm, setShowForm] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [contactForm, setContactForm] = useState({ name: '', email: '', image: '' });
     const [editingId, setEditingId] = useState(null);
     const [formErrors, setFormErrors] = useState({});
     const navigate = useNavigate();
+    const { isAuthenticatedUser, getAuthToken } = useAuthContext(); 
 
     useEffect(() => {
-        const userInfo = sessionStorage.getItem('user_info');
-        const token = sessionStorage.getItem('access_token');
-    
-        if (!userInfo || !token) {
-            navigate('/login');
-            return;
+        if (!isAuthenticatedUser) {
+            console.log("No autenticado. Redirigiendo a /login");
+            navigate('/login'); 
         }
-    
-        const savedContacts = sessionStorage.getItem('contacts');
-        if (savedContacts) {
-            try {
-                setAllContacts(JSON.parse(savedContacts) || []);
-            } catch (error) {
-                console.error('Error parsing contacts:', error);
-                setAllContacts([]);
-            }
-        } else {
-            setAllContacts([]); 
-        }
-    }, [navigate]);
-    
-
-    useEffect(() => {
-        sessionStorage.setItem('contacts', JSON.stringify(allContacts));
-    }, [allContacts]);
+    }, [isAuthenticatedUser, navigate]);
 
     const validateForm = () => {
         const errors = {};
@@ -52,34 +38,44 @@ const ContactHome = () => {
         setFormErrors(prevErrors => ({ ...prevErrors, [field]: '' }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!validateForm()) return;
 
-        const newContact = {
-            id: editingId || allContacts.length + 1,
-            name: contactForm.name.trim(),
-            email: contactForm.email.trim(),
-            image: contactForm.image.trim() || '/ImageContacts/default.jpg',
-        };
-
-        if (editingId) {
-            setAllContacts(allContacts.map(contact => 
-                contact.id === editingId ? newContact : contact
-            ));
-        } else {
-            setAllContacts([...allContacts, newContact]);
+        const token = getAuthToken();
+        if (!token) {
+            navigate('/login');
+            return;
         }
 
-        setContactForm({ name: '', email: '', image: '' });
-        setEditingId(null);
-        setShowForm(false);
+        try {
+            const data = await POST(`${ENVIRONMENT.URL_BACK}/api/contacts/add`, {
+                contact_username: contactForm.name.trim(),
+                email: contactForm.email.trim(),
+                image: contactForm.image.trim()
+            }, true);
+
+            setContacts(prevContacts => [...prevContacts, data]);
+            setContactForm({ name: '', email: '', image: '' });
+            setEditingId(null);
+            setShowForm(false);
+        } catch (error) {
+            console.error('Error saving contact:', error);
+            if (error.message === 'Unauthorized') {
+                navigate('/login');
+            } else {
+                alert(error.message || 'An unexpected error occurred');
+            }
+        }
     };
 
     const handleEdit = (contact) => {
-        setContactForm({ name: contact.name, email: contact.email, image: contact.image });
-        setEditingId(contact.id);
+        setContactForm({
+            name: contact.contact_username,
+            email: contact.email,
+            image: contact.image
+        });
+        setEditingId(contact._id);
         setShowForm(true);
     };
 
@@ -89,9 +85,17 @@ const ContactHome = () => {
         setShowForm(true);
     };
 
-    const visibleContacts = allContacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const visibleContacts = contacts.filter(contact =>
+        contact.contact_username && contact.contact_username.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (isLoading) {
+        return <div>Loading contacts...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className="contacts-container">
@@ -105,41 +109,64 @@ const ContactHome = () => {
                 placeholder="Search Contacts"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
             />
 
             {showForm && (
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value={contactForm.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
-                    />
+                <form onSubmit={handleSubmit} className="contact-form">
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            value={contactForm.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                        />
+                        {formErrors.name && <span className="error">{formErrors.name}</span>}
+                    </div>
 
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={contactForm.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                    />
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={contactForm.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                        />
+                        {formErrors.email && <span className="error">{formErrors.email}</span>}
+                    </div>
 
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={contactForm.image}
-                        onChange={(e) => handleInputChange('image', e.target.value)}
-                    />
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            value={contactForm.image}
+                            onChange={(e) => handleInputChange('image', e.target.value)}
+                        />
+                    </div>
 
-                    <button type="submit">{editingId ? 'Save' : 'Add Contact'}</button>
+                    <button type="submit">
+                        {editingId ? 'Save Changes' : 'Add Contact'}
+                    </button>
                 </form>
             )}
 
             <div className="contacts-list">
                 {visibleContacts.map(contact => (
-                    <Link to={'/chat/' + contact.id} className="contact-card" key={contact.id}>
-                        <img className="contact-image" src={contact.image || '/ImageContacts/default.jpg'} alt={''} />
-                        <h3>{contact.name}</h3>
-                        <button onClick={(e) => { e.preventDefault(); handleEdit(contact); }}>Edit</button>
+                    <Link to={`/chat/${contact._id}`} className="contact-card" key={contact._id}>
+                        <img
+                            className="contact-image"
+                            src={contact.image || '/ImageContacts/default.jpg'}
+                            alt={contact.contact_username}
+                        />
+                        <h3>{contact.contact_username}</h3>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleEdit(contact);
+                            }}
+                            className="edit-button"
+                        >
+                            Edit
+                        </button>
                     </Link>
                 ))}
             </div>

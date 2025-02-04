@@ -1,44 +1,52 @@
 import { useState, useEffect } from 'react';
-import { GET, getAuthenticatedHeaders } from '../Fetching/http.fetching';
-import ENVIRONMENT from '../enviroment';
-
+import { useAuthContext } from '../context/AuthContext';
+import { createHttpClient } from '../Fetching/http.fetching';
+import  { ENVIRONMENT } from '../environment';
 
 const useContact = () => {
     const [contacts, setContacts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const authContext = useAuthContext();
+    const { GET, POST } = createHttpClient(authContext);
 
     useEffect(() => {
         const fetchContacts = async () => {
-            setIsLoading(true);
             try {
-                const response = await GET(`${ENVIRONMENT.URL_BACK}/api/contacts`, {
-                    headers: getAuthenticatedHeaders(),
-                });
+                const response = await GET(`${ENVIRONMENT.URL_BACK}/api/contacts`);
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setContacts(data); 
-                } else {
-                    throw new Error('Failed to fetch contacts');
+                setContacts(response);
+            } catch (error) {
+                console.error('Error fetching contacts:', error);
+                setError(error.message);
+                if (error.message === 'Unauthorized') {
+                    authContext.logout();
                 }
-            } catch (err) {
-                setError(err.message); 
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchContacts();
-    }, []);
+    }, [authContext, GET]);
+
+    const addContact = async (contactData) => {
+        try {
+            const response = await POST(`${ENVIRONMENT.URL_BACK}/api/contacts/add`, contactData);
+            setContacts((prevContacts) => [...prevContacts, response.payload]);
+        } catch (error) {
+            console.error('Error adding contact:', error);
+            setError(error.message);
+            throw error;
+        }
+    };
 
     return {
         contacts,
+        setContacts,
         isLoading,
         error,
-        setContacts,
-        setError,
-        setIsLoading,
+        addContact,
     };
 };
 

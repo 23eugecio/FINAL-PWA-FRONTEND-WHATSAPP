@@ -1,46 +1,35 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { extractFormData } from '../../utils/extractFormData.js';
-import ENVIROMENT from '../../enviroment.js';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
+import { POST } from '../../Fetching/http.fetching';
+import { ENVIRONMENT } from '../../environment';
 import './Login.css';
-import { getAuthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useAuthContext();
     const [error, setError] = useState(null);
-    const user = sessionStorage.getItem('user_id');
+
     const handleSubmitLoginForm = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        const form_HTML = e.target;
+        const form_Values = new FormData(form_HTML);
+        const form_fields = {
+            email: form_Values.get('email'),
+            password: form_Values.get('password'),
+        };
+
         try {
-            e.preventDefault();
-            setError(null);
-
-            const form_HTML = e.target;
-            const form_Values = new FormData(form_HTML);
-            const form_fields = {
-                email: '',
-                password: ''
-            };
-            const form_values_object = extractFormData(form_fields, form_Values);
-
-            const response = await POST(
-                `${ENVIROMENT.URL_BACK}/api/auth/login`,
-                {
-                    headers: getAuthenticatedHeaders(),
-                    body: JSON.stringify(form_values_object),
-                }
-            );
-
-            if (response && response.payload) {
-                sessionStorage.setItem('access_token', response.payload.token);
-                sessionStorage.setItem('user_info', JSON.stringify(response.payload.user));
-                navigate('/contact-home');
-            }
-            else {
-                setError('Invalid email or password.');
-            }
+            const data = await POST(`${ENVIRONMENT.URL_BACK}/api/auth/login`, form_fields); 
+            const { token, user } = data.payload;
+            sessionStorage.setItem('user_info', JSON.stringify(user));
+            await login(user._id, token);
+            navigate('/contact-home', { replace: true });
         } catch (error) {
-            console.error('Error logging in:', error);
-            setError(error.message || 'An unexpected error occurred.');
+            console.error('Error during login:', error);
+            setError(error.message || 'An unexpected error occurred');
         }
     };
 
@@ -74,16 +63,7 @@ const Login = () => {
                         required
                     />
                 </div>
-
                 <button type="submit">Login</button>
-                <span>
-                    If you don't have an account yet?{' '}
-                    <Link to="/register">Register!</Link>
-                </span>
-                <span>
-                    Forgot your password?{' '}
-                    <Link to="/forgot-password">Click here!</Link>
-                </span>
             </form>
         </div>
     );

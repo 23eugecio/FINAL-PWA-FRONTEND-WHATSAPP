@@ -1,77 +1,101 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './ChatComponent.css';
+import { ENVIRONMENT } from '../../environment';
 
 const ChatComponent = ({ allContacts }) => {
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const { contact_id } = useParams();
     const contact = allContacts?.find(contact => contact.id.toString() === contact_id);
 
+    const loadMessages = async (contact_id) => {
+        try {
+            const response = await fetch(`${ENVIRONMENT.URL_BACK}/api/messages/${contact_id}`, {
+                headers: {
+                    'Authorization': `Bearer ${ENVIRONMENT.URL_BACK}/api/messages/${contact_id}`, 
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                console.error('Failed to fetch messages:', response.status);
+            }
+            const data = await response.json();
+            return data.data.conversation;
+        } catch (error) {
+            console.error('Failed to fetch messages:', error);
+            throw error;
+        }
+    };
+    
+    const saveMessage = async (message) => {
+        try {
+            const response = await fetch(`${ENVIRONMENT.URL_BACK}/api/messages/${contact_id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                },
+                body: JSON.stringify({
+                    receiver_id: contact_id,
+                    content: message.text
+                }),
+            });
+            if (!response.ok) {
+                throw new Error(`error: ${response.status}`);
+            }
+            const savedMessage = await response.json();
+            return savedMessage;
+        } catch (error) {
+            console.error('Failed to save message:', error);
+            throw error;
+        }
+    };
+
     useEffect(() => {
-        const loadMessages = () => {
-            const storedMessages = sessionStorage.getItem(`chat_messages_${contact_id}`);
-            if (storedMessages) {
-                setMessages(JSON.parse(storedMessages));
+        const fetchMessages = async () => {
+            try {
+                const data = await loadMessages(contact_id);
+                setMessages(data);
+                setLoading(false);
+            } catch (error) {
+                setError('Failed to load messages. Please try again later.');
+                setLoading(false);
             }
         };
 
-        loadMessages();
-        const intervalId = setInterval(loadMessages, 1000);
+        fetchMessages();
+        const intervalId = setInterval(fetchMessages, 1000);
         return () => clearInterval(intervalId);
     }, [contact_id]);
 
-    useEffect(() => {
-        if (messages.length > 0) {
-            sessionStorage.setItem(`chat_messages_${contact_id}`, JSON.stringify(messages));
-        }
-    }, [messages, contact_id]);
-
-    const addMessage = (messageText) => {
-        const newMessage = {
-            id: Date.now(),
-            author: 'yo',
-            text: messageText,
-            day: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            estado: 'sent'
-        };
-
-        setTimeout(() => {
-            const responseMessage = {
-                id: Date.now() + 1,
-                author: contact?.name || 'them',
-                text: `Reply to: ${messageText}`,
-                day: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                estado: 'received'
-            };
-            setMessages(prev => [...prev, responseMessage]);
-        }, 1000);
-
-        setMessages(prev => [...prev, newMessage]);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (inputMessage.trim()) {
-            addMessage(inputMessage);
+            const newMessage = {
+                id: Date.now(),
+                author: 'yo',
+                text: inputMessage,
+                day: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                estado: 'sent'
+            };
+
+            setMessages(prev => [...prev, newMessage]);
             setInputMessage('');
+
+            try {
+                await saveMessage(newMessage);
+            } catch (error) {
+                setError('Failed to save message. Please try again later.');
+            }
         }
     };
 
-    const Message = ({ author, content, date, status }) => (
-        <div className={`message ${author === 'yo' ? 'message-right' : 'message-left'}`}>
-            <div className="message-author">{author}</div>
-            <div className="message-content">{content}</div>
-            <div className="message-info">
-                {date}
-                <span className={`message-status status-${status}`}>
-                    {status === 'sent' && '✓'}
-                    {status === 'delivered' && '✓✓'}
-                    {status === 'read' && '✓✓'}
-                </span>
-            </div>
-        </div>
-    );
+    const handleInputChange = (e) => {
+        setInputMessage(e.target.value);
+    };
 
     return (
         <div className="chat-container">
@@ -97,15 +121,29 @@ const ChatComponent = ({ allContacts }) => {
             </header>
 
             <div className="messages-container">
-                {messages.map(data => (
-                    <Message
-                        key={data.id}
-                        author={data.author}
-                        content={data.text}
-                        date={data.day}
-                        status={data.estado}
-                    />
-                ))}
+                {loading ? (
+                    <div className="loading-messages">
+                        <div className="loading-spinner">Loading messages...</div>
+                    </div>
+                ) : error ? (
+                    <div className="error-container">
+                        <p>{error}</p>
+                    </div>
+                ) : messages.length === 0 ? (
+                    <div className="no-messages">
+                        <p>No messages yet. Start a conversation!</p>
+                    </div>
+                ) : (
+                    messages.map(data => (
+                        <Message
+                            key={data.id}
+                            author={data.author}
+                            content={data.text}
+                            date={data.day}
+                            status={data.estado}
+                        />
+                    ))
+                )}
             </div>
 
             <footer className="chat-footer">
@@ -116,7 +154,7 @@ const ChatComponent = ({ allContacts }) => {
                     <input
                         type="text"
                         value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
+                        onChange={handleInputChange}
                         placeholder="Type a message"
                         className="message-input"
                     />
@@ -132,5 +170,20 @@ const ChatComponent = ({ allContacts }) => {
         </div>
     );
 };
+
+const Message = ({ author, content, date, status }) => (
+    <div className={`message ${author === 'yo' ? 'message-right' : 'message-left'}`}>
+        <div className="message-author">{author}</div>
+        <div className="message-content">{content}</div>
+        <div className="message-info">
+            {date}
+            <span className={`message-status status-${status}`}>
+                {status === 'sent' && '✓'}
+                {status === 'delivered' && '✓✓'}
+                {status === 'read' && '✓✓'}
+            </span>
+        </div>
+    </div>
+);
 
 export default ChatComponent;

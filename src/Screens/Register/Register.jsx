@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './Register.css'
-import ENVIROMENT from '../../enviroment.js';
+import './Register.css';
+import { ENVIRONMENT } from '../../environment.js';
 import useForm from '../../Hooks/useForm.jsx';
 import { getUnnauthenticatedHeaders, POST } from '../../Fetching/http.fetching.js';
 import { extractFormData } from '../../utils/extractFormData.js';
 import '../../App.css';
+
 const Register = () => {
     const form_fields = {
         'name': '',
@@ -21,20 +22,30 @@ const Register = () => {
         const form_values = new FormData(form_HTML);
         const form_values_object = extractFormData(form_fields, form_values);
 
-        console.log('Sending registration data:', form_values_object);
+        try {
+            const response = await POST(
+                `${ENVIRONMENT.URL_BACK}/api/auth/register`,
+                {
+                    headers: getUnnauthenticatedHeaders(),
+                    body: JSON.stringify(form_values_object)
+                }
+            );
 
-        const response = await POST(
-            `${ENVIROMENT.URL_BACK}/api/auth/register`,
-            {
-                headers: getUnnauthenticatedHeaders(),
-                body: JSON.stringify(form_values_object)
-            })
-        if (response.ok) {
-            navigate('/login');
-        } else {
-            console.log(response.message)
+            console.log('Registration response:', response);
+
+            if (response.message === 'Registro exitoso, por favor verifica tu email') {
+                navigate('/login');
+            } else {
+                console.error('Registration error:', response.message);
+            }
+        } catch (error) {
+            console.error('Request error:', error);
+            if (error.message.includes('Clave duplicada')) {
+                alert('Email already registered');
+            }
         }
     }
+
     return (
         <div className="register-container">
             <div className="register-form">
@@ -91,4 +102,3 @@ const Register = () => {
 }
 
 export default Register;
-
