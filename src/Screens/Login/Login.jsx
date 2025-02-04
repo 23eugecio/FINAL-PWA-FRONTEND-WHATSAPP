@@ -23,7 +23,6 @@ const Login = () => {
 
         try {
             const data = await POST('/api/auth/login', form_fields); // Utilizando la función POST mejorada
-
             const { token, user } = data.payload;
             sessionStorage.setItem('user_info', JSON.stringify(user));
             await login(user._id, token);
