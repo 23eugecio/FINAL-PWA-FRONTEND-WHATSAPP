@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
 import { POST } from '../../Fetching/http.fetching';
-import { ENVIRONMENT } from '../../environment';
+
 import './Login.css';
 
 const Login = () => {
@@ -22,7 +22,8 @@ const Login = () => {
         };
 
         try {
-            const data = await POST(`${ENVIRONMENT.URL_BACK}/api/auth/login`, form_fields); 
+            const data = await POST('/api/auth/login', form_fields); // Utilizando la función POST mejorada
+
             const { token, user } = data.payload;
             sessionStorage.setItem('user_info', JSON.stringify(user));
             await login(user._id, token);
